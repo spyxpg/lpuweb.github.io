@@ -7,74 +7,63 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: black;
       overflow: hidden;
-      height: 100%;
-      font-family: 'Courier New', Courier, monospace;
+      background: black;
       color: #00FF00;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100%;
     }
 
     canvas {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: -1;
+      z-index: 0;
     }
 
-    .hacked-message {
+    h1 {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      text-align: center;
       color: #00FF00;
-      text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0;
-      animation: flicker 1s infinite alternate;
-    }
-
-    .hacked-message h1 {
       font-size: 3em;
-      margin: 0;
-    }
-
-    .hacked-message p {
-      font-size: 1.5em;
-      margin-top: 10px;
+      text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00, 0 0 25px #00ff00;
+      z-index: 1;
+      animation: flicker 1.5s infinite alternate;
+      text-align: center;
     }
 
     @keyframes flicker {
       0% { opacity: 1; }
-      100% { opacity: 0.8; }
+      100% { opacity: 0.7; }
     }
   </style>
 </head>
 <body>
 
-<canvas id="matrixCanvas"></canvas>
-
-<div class="hacked-message">
-  <h1>Subdomain Hijacked</h1>
-  <p>by <strong>SPYxPG</strong> 💀</p>
-</div>
+<canvas id="matrix"></canvas>
+<h1>Subdomain Hijacked<br>by SPYxPG 💀</h1>
 
 <script>
-  const canvas = document.getElementById('matrixCanvas');
+  const canvas = document.getElementById('matrix');
   const ctx = canvas.getContext('2d');
 
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
 
-  const letters = "アァイィウエオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*";
+  const letters = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const fontSize = 14;
   const columns = canvas.width / fontSize;
-  const drops = Array.from({ length: columns }, () => 1);
+
+  const drops = Array(Math.floor(columns)).fill(1);
 
   function draw() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "#0F0";
-    ctx.font = fontSize + "px monospace";
+    ctx.fillStyle = '#0F0';
+    ctx.font = `${fontSize}px Courier New`;
 
     for (let i = 0; i < drops.length; i++) {
       const text = letters.charAt(Math.floor(Math.random() * letters.length));
@@ -89,6 +78,11 @@
   }
 
   setInterval(draw, 33);
+
+  window.addEventListener('resize', () => {
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+  });
 </script>
 
 </body>
